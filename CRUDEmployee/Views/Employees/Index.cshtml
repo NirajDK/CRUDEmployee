@@ -6,11 +6,25 @@
 
 <h1>Index</h1>
 
+
 <p>
-    <button class="btn btn-primary" onclick="showCreateModal()">Create New</button>
+    <button class="btn btn-primary" id="createNewBtn" onclick="partialView()">Create New</button>
 </p>
 
-<table class="table">
+<div id="partialViewContainer"></div>
+
+
+
+
+@*  <p>
+    <button class="btn btn-primary" onclick="showCreateModal()">Create New</button>
+</p>
+ *@
+
+
+
+
+ <table class="table">
     <thead>
         <tr>
             <th>
@@ -63,6 +77,18 @@
 
 @section Scripts {
     <script>
+        function partialView() {
+            document.getElementById('createNewBtn').addEventListener('click', function () {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', '@Url.Action("CreatePartial", "Employees")', true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        document.getElementById('partialViewContainer').insertAdjacentHTML('beforeend', xhr.responseText);
+                    }
+                };
+                xhr.send();
+            });
+        }
         function showCreateModal() {
             $.get('@Url.Action("CreateOrEdit")', function(data) {
                 $('#createEditForm').html(data);
@@ -85,4 +111,4 @@
             }
         }
     </script>
-}
+  }

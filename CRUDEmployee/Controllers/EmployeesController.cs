@@ -20,7 +20,10 @@ public class EmployeesController : Controller
     {
         _context = context;
     }
-
+    public IActionResult CreatePartial()
+    {
+        return PartialView("_CreateEmployee");
+    }
     public async Task<IActionResult> Index()
     {
         return View(await _context.Employees.ToListAsync());
